@@ -25,7 +25,7 @@ class DictTuple:
     def __setitem__(self, key, value):
         if not self.dt:
             self.dt.append({})
-        self.dt[-1][key] = str(value)  # Convert value to string
+        self.dt[-1][key] = value  # Store the value as-is, without converting to string
 
     def __delitem__(self, key):
         found = False
@@ -65,7 +65,7 @@ class DictTuple:
         return NotImplemented
 
     def __setattr__(self, name, value):
-        if name != 'dt':
+        if hasattr(self, 'dt') and name != 'dt':
             raise AttributeError(f"Cannot add new attributes to {self.__class__.__name__}")
         super().__setattr__(name, value)
 
