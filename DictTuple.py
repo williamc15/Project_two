@@ -1,7 +1,7 @@
 class DictTuple:
     def __init__(self, *args):
         if not args or not all(isinstance(arg, dict) for arg in args) or any(len(arg) == 0 for arg in args):
-            raise ValueError("DictTuple.__init__: All arguments must be non-empty dictionaries")
+            raise AssertionError("DictTuple.__init__: All arguments must be non-empty dictionaries")
         self.dt = list(args)
 
     def __len__(self):
@@ -20,12 +20,12 @@ class DictTuple:
         for d in reversed(self.dt):
             if key in d:
                 return d[key]
-        raise KeyError(f"Key '{key}' not found in any dictionary")
+        raise KeyError(key)
 
     def __setitem__(self, key, value):
         if not self.dt:
             self.dt.append({})
-        self.dt[-1][key] = value
+        self.dt[-1][key] = str(value)  # Convert value to string
 
     def __delitem__(self, key):
         found = False
@@ -34,12 +34,12 @@ class DictTuple:
                 del d[key]
                 found = True
         if not found:
-            raise KeyError(f"Key '{key}' not found in any dictionary")
+            raise KeyError(key)
 
     def __call__(self, key):
         result = [d[key] for d in self.dt if key in d]
         if not result:
-            raise KeyError(f"Key '{key}' not found in any dictionary")
+            raise KeyError(key)
         return result
 
     def __iter__(self):
