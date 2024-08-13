@@ -7,6 +7,7 @@ from keyword import kwlist
 def validate_name(name: str):
     name=str(name)
     name=name.strip()
+    print(f"'{name}'")
     if not name:
         return False
     if not name[0].isalpha():
