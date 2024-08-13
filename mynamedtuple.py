@@ -5,6 +5,7 @@ from keyword import kwlist
 
 
 def validate_name(name: str):
+    print(name)
     name=str(name)
     if not name:
         return False
