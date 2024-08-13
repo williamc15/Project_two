@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
     # Validate type_name
-    if not type_name.isidentifier() or keyword.iskeyword(type_name):
+    if not str(type_name).isidentifier() or keyword.iskeyword(type_name):
         raise SyntaxError(f"Invalid type name: {type_name}")
 
     # Process field_names
@@ -13,7 +13,7 @@ def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
 
     # Validate field_names
     for name in field_names:
-        if not name.isidentifier() or keyword.iskeyword(name):
+        if not str(name).isidentifier() or keyword.iskeyword(name):
             raise SyntaxError(f"Invalid field name: {name}")
 
     # Validate defaults
@@ -35,7 +35,7 @@ def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
 
     # __repr__ method
     class_definition += "    def __repr__(self):\n"
-    repr_str = f"{type_name}(" + ", ".join([f"{name}={{self.{name}!r}}" for name in field_names]) + ")"
+    repr_str = f"{type_name}(" + ",".join([f"{name}={{self.{name}!r}}" for name in field_names]) + ")"
     class_definition += f"        return f'{repr_str}'\n\n"
 
     # Getter methods
