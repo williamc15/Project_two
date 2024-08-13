@@ -68,7 +68,7 @@ def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
     class_definition += "            for name, value in kwargs.items():\n"
     class_definition += "                setattr(self, name, value)\n"
     class_definition += "        else:\n"
-    class_definition += "            raise TypeError('Cannot mutate immutable object')
+    class_definition += "            raise TypeError('Cannot mutate immutable object')\n"
 
     # __setattr__ method
     class_definition += "    def __setattr__(self, name, value):\n"
