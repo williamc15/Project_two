@@ -1,9 +1,24 @@
 import keyword
 from collections import OrderedDict
 
+from keyword import kwlist
+
+
+def validate_name(name: str):
+    if not name:
+        return False
+    if not name[0].isalpha():
+        return False
+    if name in kwlist:
+        return False
+    for letter in name:
+        if not letter.isdigit() and not letter.isalpha() and letter != "_":
+            return False
+    return True
+
 def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
     # Validate type_name
-    if not type_name.isidentifier() or keyword.iskeyword(type_name):
+    if not validate_name(type_name):
         raise SyntaxError(f"Invalid type name: {type_name}")
 
     # Process field_names
@@ -13,7 +28,7 @@ def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
 
     # Validate field_names
     for name in field_names:
-        if not name.isidentifier() or keyword.iskeyword(name):
+        if not validate_name(name):
             raise SyntaxError(f"Invalid field name: {name}")
 
     # Validate defaults
