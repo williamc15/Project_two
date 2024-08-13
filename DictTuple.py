@@ -39,9 +39,10 @@ class DictTuple:
             raise KeyError(key)
 
     def __call__(self, key):
-        result = [d[key] for d in self.dt if key in d]
-        if not result:
-            raise KeyError(key)
+        result = []
+        for d in self.dt:
+            if key in d:
+                result.append(d[key])
         return result
 
     def __iter__(self):
