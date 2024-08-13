@@ -23,9 +23,11 @@ class DictTuple:
         raise KeyError(key)
 
     def __setitem__(self, key, value):
-        if not self.dt:
-            self.dt.append({})
-        self.dt[-1][key] = value  # Store the value as-is, without converting to string
+        for i in range(len(self.dt) - 1, -1, -1):
+            if key in self.dt[i]:
+                self.dt[i][key] = value
+                return
+        self.dt.append({key: value})
 
     def __delitem__(self, key):
         found = False
@@ -65,9 +67,10 @@ class DictTuple:
         return NotImplemented
 
     def __setattr__(self, name, value):
-        if hasattr(self, 'dt') and name != 'dt':
-            raise AttributeError(f"Cannot add new attributes to {self.__class__.__name__}")
-        super().__setattr__(name, value)
+        if name in {'dt'}:
+            super().__setattr__(name, value)
+        else:
+            raise AssertionError(f"Cannot add or modify attribute '{name}' in {self.__class__.__name__}")
 
     def _asdict(self):
         result = {}
