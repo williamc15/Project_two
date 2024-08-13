@@ -66,7 +66,7 @@ def mynamedtuple(type_name, field_names, mutable=False, defaults={}):
     class_definition += "    def _replace(self, **kwargs):\n"
     class_definition += "        if self._mutable:\n"
     class_definition += "            for name, value in kwargs.items():\n"
-    class_definition += "                if not isinstance(value,int):\n"
+    class_definition += "                if name not in self._fields:\n"
     class_definition += "                    raise TypeError('invalid value')\n"
     class_definition += "                setattr(self, name, value)\n"
     class_definition += "        else:\n"
